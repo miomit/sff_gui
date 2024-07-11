@@ -56,7 +56,15 @@ class YaruPage extends StatelessWidget {
           leading: Navigator.canPop(context) ? const YaruBackButton() : null,
           title: Text(pageList[index].title),
         ),
-        body: pageList[index].getChild(),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: 10,
+              horizontal: 20,
+            ),
+            child: pageList[index].getChild(),
+          ),
+        ),
       ),
     );
   }
