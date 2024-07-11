@@ -15,14 +15,9 @@ class YPage {
   });
 }
 
-class YaruPage extends StatefulWidget {
-  const YaruPage({super.key});
+class YaruPage extends StatelessWidget {
+  YaruPage({super.key});
 
-  @override
-  State<YaruPage> createState() => _YaruPageState();
-}
-
-class _YaruPageState extends State<YaruPage> {
   final List<YPage> pageList = [
     YPage(
       title: "Home",

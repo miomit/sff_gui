@@ -22,7 +22,7 @@ class Window extends StatelessWidget {
           darkTheme: yaru.darkTheme,
           highContrastTheme: yaruHighContrastLight,
           highContrastDarkTheme: yaruHighContrastDark,
-          home: const YaruPage(),
+          home: YaruPage(),
           scrollBehavior: const MaterialScrollBehavior().copyWith(
             dragDevices: {
               PointerDeviceKind.mouse,
