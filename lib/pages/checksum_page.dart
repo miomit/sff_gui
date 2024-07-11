@@ -66,20 +66,10 @@ class _ChecksumPageState extends State<ChecksumPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  ElevatedButton(
+                  ElevatedButton.icon(
+                    icon: const Icon(YaruIcons.document_open),
+                    label: const Text("Select File"),
                     onPressed: () {},
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          YaruIcons.document_open,
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text("Select File"),
-                      ],
-                    ),
                   ),
                   TextButton(
                     onPressed: () {},
