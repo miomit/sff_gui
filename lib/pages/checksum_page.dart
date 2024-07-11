@@ -68,7 +68,7 @@ class _ChecksumPageState extends State<ChecksumPage> {
                 children: [
                   ElevatedButton.icon(
                     icon: const Icon(YaruIcons.document_open),
-                    label: const Text("Select File"),
+                    label: const Text("Open"),
                     onPressed: () {},
                   ),
                   TextButton(
