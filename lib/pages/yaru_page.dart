@@ -21,17 +21,14 @@ class YaruPage extends StatelessWidget {
   final List<YPage> pageList = [
     YPage(
       title: "Home",
-      icon: const Icon(Icons.home_outlined),
       getChild: () => const HomePage(),
     ),
     YPage(
       title: "Checksum",
-      icon: const Icon(Icons.exposure_plus_1_outlined),
       getChild: () => const ChecksumPage(),
     ),
     YPage(
       title: "CompareFilesEquality",
-      icon: const Icon(Icons.compare_outlined),
       getChild: () => const CompareFilesEqualityPage(),
     ),
   ];
