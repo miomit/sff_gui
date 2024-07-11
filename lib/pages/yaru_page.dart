@@ -52,6 +52,17 @@ class YaruPage extends StatelessWidget {
           border: BorderSide.none,
           leading: Navigator.canPop(context) ? const YaruBackButton() : null,
           title: Text(pageList[index].title),
+          actions: [
+            YaruIconButton(
+              icon: Transform.scale(
+                scale: 0.6,
+                child: const YaruCircularProgressIndicator(
+                  value: null,
+                ),
+              ),
+              onPressed: () {},
+            ),
+          ],
         ),
         body: SingleChildScrollView(
           child: Padding(
