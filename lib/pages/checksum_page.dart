@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:yaru/yaru.dart';
 
@@ -84,17 +82,30 @@ class _ChecksumPageState extends State<ChecksumPage> {
           Padding(
             padding: const EdgeInsets.only(top: 10),
             child: YaruSection(
+              headline: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Expanded(
+                    child: Text(
+                      "File Name",
+                      overflow: TextOverflow.fade,
+                      maxLines: 1,
+                      softWrap: false,
+                    ),
+                  ),
+                  Padding(
+                      padding: const EdgeInsets.only(left: 5),
+                      child: YaruIconButton(
+                        onPressed: () {},
+                        icon: const Icon(
+                          YaruIcons.trash,
+                          color: YaruColors.red,
+                        ),
+                      )),
+                ],
+              ),
               child: Column(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      TextButton(
-                        onPressed: () {},
-                        child: const Text("Clear"),
-                      )
-                    ],
-                  ),
                   YaruTile(
                     title: const Text("md5"),
                     subtitle: const Text("8c160d222c3c808406927c970c979a3d"),
