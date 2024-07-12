@@ -1,0 +1,3 @@
+[submodule "lib/sff"]
+	path = lib/sff
+	url = https://github.com/miomit/sff_lib.git
