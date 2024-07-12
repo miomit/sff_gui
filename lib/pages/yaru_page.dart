@@ -46,6 +46,13 @@ class YaruPage extends StatelessWidget {
         leading: pageList[index].icon,
         title: Text(pageList[index].title),
       ),
+      bottomBar: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: YaruMasterTile(
+          title: const Text('Settings'),
+          onTap: () {},
+        ),
+      ),
       pageBuilder: (context, index) => YaruDetailPage(
         appBar: YaruWindowTitleBar(
           backgroundColor: const Color.fromARGB(0, 241, 11, 11),
