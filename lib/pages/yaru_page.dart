@@ -28,7 +28,7 @@ class YaruPage extends StatelessWidget {
       getChild: () => const ChecksumPage(),
     ),
     YPage(
-      title: "CompareFilesEquality",
+      title: "Compare Files Equality",
       getChild: () => const CompareFilesEqualityPage(),
     ),
   ];
