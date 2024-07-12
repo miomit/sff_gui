@@ -11,6 +11,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  sff_lib: 
+    path: lib/sff
   yaru:
 
   cupertino_icons: ^1.0.6

@@ -65,6 +65,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.18.0"
+  convert:
+    dependency: transitive
+    description:
+      name: convert
+      sha256: "0f08b14755d163f6e2134cb58222dd25ea2a2ee8a195e53983d57c075324d592"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.1"
   crypto:
     dependency: transitive
     description:
@@ -240,6 +248,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.1.9"
+  sff_lib:
+    dependency: "direct main"
+    description:
+      path: "lib/sff"
+      relative: true
+    source: path
+    version: "0.0.7"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -333,6 +348,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.5.0"
+  yaml:
+    dependency: transitive
+    description:
+      name: yaml
+      sha256: "75769501ea3489fca56601ff33454fe45507ea3bfb014161abc3b43ae25989d5"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.2"
   yaru:
     dependency: "direct main"
     description:
