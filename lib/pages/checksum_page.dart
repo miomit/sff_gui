@@ -1,4 +1,9 @@
+import 'dart:io';
+
+import 'package:filesystem_picker/filesystem_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sff_gui/providers/checksum_provider.dart';
 import 'package:yaru/yaru.dart';
 
 class ChecksumPage extends StatefulWidget {
@@ -9,24 +14,9 @@ class ChecksumPage extends StatefulWidget {
 }
 
 class _ChecksumPageState extends State<ChecksumPage> {
-  final _labels = [
-    "md5",
-    "sha1",
-    "sha224",
-    "sha256",
-    "sha384",
-    "sha512",
-    "sha512224",
-    "sha512256",
-  ];
-
-  late List<bool> _isSelected;
-
   @override
   void initState() {
     super.initState();
-    _isSelected = List.generate(_labels.length, (index) => false);
-    _isSelected[1] = true;
   }
 
   @override
@@ -44,20 +34,28 @@ class _ChecksumPageState extends State<ChecksumPage> {
                 shrinkWrap: false,
                 clearOnSelect: false,
                 yaruChoiceChipBarStyle: YaruChoiceChipBarStyle.stack,
-                labels: _labels.map(Text.new).toList(),
-                isSelected: _isSelected,
-                onSelected: (index) => setState(() {
-                  _isSelected[index] = !_isSelected[index];
-                }),
+                labels: context
+                    .watch<ChecksumProvider>()
+                    .hashMethodChoices
+                    .map((v) => Text(v.name))
+                    .toList(),
+                isSelected: context
+                    .watch<ChecksumProvider>()
+                    .hashMethodChoices
+                    .map((v) => v.isSelect)
+                    .toList(),
+                onSelected:
+                    context.read<ChecksumProvider>().onSelectHashMethods,
               ),
               const SizedBox(
                 height: 10,
               ),
-              const TextField(
-                decoration: InputDecoration(
-                  hintText: "path/to/file",
-                ),
-              ),
+              TextFormField(
+                  initialValue: context.watch<ChecksumProvider>().pathToFile,
+                  decoration: const InputDecoration(hintText: "path/to/file"),
+                  onChanged: (v) {
+                    context.read<ChecksumProvider>().pathToFile = v;
+                  }),
               const SizedBox(
                 height: 10,
               ),
@@ -67,10 +65,20 @@ class _ChecksumPageState extends State<ChecksumPage> {
                   ElevatedButton.icon(
                     icon: const Icon(YaruIcons.document_open),
                     label: const Text("Open"),
-                    onPressed: () {},
+                    onPressed: () async {
+                      print(await FilesystemPicker.openDialog(
+                        title: 'Save to folder',
+                        context: context,
+                        rootDirectory: Directory("/"),
+                        fsType: FilesystemType.folder,
+                        pickText: 'Save file to this folder',
+                      ));
+                    },
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      //context.read<ChecksumProvider>().increment();
+                    },
                     child: const Text("Calculate"),
                   ),
                 ],
