@@ -13,9 +13,12 @@ dependencies:
     sdk: flutter
   sff_lib: 
     path: lib/sff
+  filesystem_picker: ^4.1.0
+  provider: ^6.1.2
   yaru:
 
   cupertino_icons: ^1.0.6
+  crypto: ^3.0.3
 
 dev_dependencies:
   flutter_test:

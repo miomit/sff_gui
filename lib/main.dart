@@ -2,6 +2,7 @@ import 'dart:io' show Platform;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
+import 'package:sff_gui/providers/inherited_provider.dart';
 import 'package:sff_gui/window.dart';
 import 'package:yaru/yaru.dart';
 
@@ -16,8 +17,10 @@ Future<void> main() async {
   SemanticsBinding.instance.ensureSemantics();
 
   runApp(
-    InheritedYaruVariant(
-      child: const Window(),
+    InheritedProvider(
+      child: InheritedYaruVariant(
+        child: const Window(),
+      ),
     ),
   );
 }
