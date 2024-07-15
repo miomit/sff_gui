@@ -93,16 +93,16 @@ class _ChecksumPageState extends State<ChecksumPage> {
             ],
           ),
         ),
-        for (int i = 0; i < 40; i++)
+        for (var res in context.watch<ChecksumProvider>().resList)
           Padding(
             padding: const EdgeInsets.only(top: 10),
             child: YaruSection(
               headline: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Expanded(
+                  Expanded(
                     child: Text(
-                      "File Name",
+                      res.file.path,
                       overflow: TextOverflow.fade,
                       maxLines: 1,
                       softWrap: false,
@@ -121,23 +121,15 @@ class _ChecksumPageState extends State<ChecksumPage> {
               ),
               child: Column(
                 children: [
-                  YaruTile(
-                    title: const Text("md5"),
-                    subtitle: const Text("8c160d222c3c808406927c970c979a3d"),
-                    trailing: IconButton(
-                      onPressed: () {},
-                      icon: const Icon(YaruIcons.copy),
+                  for (var hashRes in res.checksumMap.entries)
+                    YaruTile(
+                      title: Text(hashRes.key.toString()),
+                      subtitle: Text(hashRes.value.toString()),
+                      trailing: IconButton(
+                        onPressed: () {},
+                        icon: const Icon(YaruIcons.copy),
+                      ),
                     ),
-                  ),
-                  YaruTile(
-                    title: const Text("sha512"),
-                    subtitle: const Text(
-                        "6aea8d760013c78b79628b77ac616a5519f8f4990cea8c5dd490f2f29a9d32e0b6593ed42d2532ce3937261e33ca121c98af3dd6466b5d193c8cff3f570a93f3"),
-                    trailing: IconButton(
-                      onPressed: () {},
-                      icon: const Icon(YaruIcons.copy),
-                    ),
-                  ),
                 ],
               ),
             ),
