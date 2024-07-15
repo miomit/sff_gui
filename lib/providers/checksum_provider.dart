@@ -46,10 +46,7 @@ class ChecksumProvider with ChangeNotifier {
   String? get pathToFile => _pathToFile;
 
   set pathToFile(String? val) {
-    if (val != null) {
-      _pathToFile = val;
-      notifyListeners();
-    }
+    _pathToFile = val;
   }
 
   void onSelectHashMethods(int index) {

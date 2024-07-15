@@ -21,6 +21,12 @@ class _ChecksumPageState extends State<ChecksumPage> {
 
   @override
   Widget build(BuildContext context) {
+    final controllerPath = TextEditingController(
+      text: context.read<ChecksumProvider>().pathToFile,
+    );
+    controllerPath.addListener(() {
+      context.read<ChecksumProvider>().pathToFile = controllerPath.text;
+    });
     return Column(
       children: [
         YaruSection(
@@ -50,12 +56,10 @@ class _ChecksumPageState extends State<ChecksumPage> {
               const SizedBox(
                 height: 10,
               ),
-              TextFormField(
-                  initialValue: context.watch<ChecksumProvider>().pathToFile,
-                  decoration: const InputDecoration(hintText: "path/to/file"),
-                  onChanged: (v) {
-                    context.read<ChecksumProvider>().pathToFile = v;
-                  }),
+              TextField(
+                decoration: const InputDecoration(hintText: "path/to/file"),
+                controller: controllerPath,
+              ),
               const SizedBox(
                 height: 10,
               ),
@@ -66,13 +70,16 @@ class _ChecksumPageState extends State<ChecksumPage> {
                     icon: const Icon(YaruIcons.document_open),
                     label: const Text("Open"),
                     onPressed: () async {
-                      print(await FilesystemPicker.openDialog(
+                      if (await FilesystemPicker.openDialog(
                         title: 'Save to folder',
                         context: context,
                         rootDirectory: Directory("/"),
                         fsType: FilesystemType.folder,
                         pickText: 'Save file to this folder',
-                      ));
+                      )
+                          case String text) {
+                        controllerPath.text = text;
+                      }
                     },
                   ),
                   TextButton(
