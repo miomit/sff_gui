@@ -2,9 +2,11 @@ import 'dart:io';
 
 import 'package:filesystem_picker/filesystem_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:sff_gui/providers/checksum_provider.dart';
 import 'package:yaru/yaru.dart';
+import 'package:path/path.dart';
 
 class ChecksumPage extends StatefulWidget {
   const ChecksumPage({super.key});
@@ -50,13 +52,15 @@ class _ChecksumPageState extends State<ChecksumPage> {
                     .hashMethodChoices
                     .map((v) => v.isSelect)
                     .toList(),
-                onSelected:
-                    context.read<ChecksumProvider>().onSelectHashMethods,
+                onSelected: context.watch<ChecksumProvider>().isProcessin
+                    ? null
+                    : context.read<ChecksumProvider>().onSelectHashMethods,
               ),
               const SizedBox(
                 height: 10,
               ),
               TextField(
+                readOnly: context.watch<ChecksumProvider>().isProcessin,
                 decoration: const InputDecoration(hintText: "path/to/file"),
                 controller: controllerPath,
               ),
@@ -69,23 +73,27 @@ class _ChecksumPageState extends State<ChecksumPage> {
                   ElevatedButton.icon(
                     icon: const Icon(YaruIcons.document_open),
                     label: const Text("Open"),
-                    onPressed: () async {
-                      if (await FilesystemPicker.openDialog(
-                        title: 'Save to folder',
-                        context: context,
-                        rootDirectory: Directory("/"),
-                        fsType: FilesystemType.folder,
-                        pickText: 'Save file to this folder',
-                      )
-                          case String text) {
-                        controllerPath.text = text;
-                      }
-                    },
+                    onPressed: context.watch<ChecksumProvider>().isProcessin
+                        ? null
+                        : () async {
+                            if (await FilesystemPicker.openDialog(
+                              title: 'Save to folder',
+                              context: context,
+                              rootDirectory: Directory("/"),
+                              fsType: FilesystemType.file,
+                              pickText: 'Save file to this folder',
+                            )
+                                case String text) {
+                              controllerPath.text = text;
+                            }
+                          },
                   ),
                   TextButton(
-                    onPressed: () {
-                      //context.read<ChecksumProvider>().increment();
-                    },
+                    onPressed: context.watch<ChecksumProvider>().isProcessin
+                        ? null
+                        : () {
+                            context.read<ChecksumProvider>().calculate();
+                          },
                     child: const Text("Calculate"),
                   ),
                 ],
@@ -102,7 +110,7 @@ class _ChecksumPageState extends State<ChecksumPage> {
                 children: [
                   Expanded(
                     child: Text(
-                      res.file.path,
+                      basename(res.file.path),
                       overflow: TextOverflow.fade,
                       maxLines: 1,
                       softWrap: false,
@@ -126,7 +134,11 @@ class _ChecksumPageState extends State<ChecksumPage> {
                       title: Text(hashRes.key.toString()),
                       subtitle: Text(hashRes.value.toString()),
                       trailing: IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Clipboard.setData(ClipboardData(
+                            text: hashRes.value.toString(),
+                          ));
+                        },
                         icon: const Icon(YaruIcons.copy),
                       ),
                     ),

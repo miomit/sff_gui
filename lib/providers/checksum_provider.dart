@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:crypto/crypto.dart';
 import 'package:flutter/foundation.dart';
+import 'package:sff_gui/sff/lib/src/file.dart';
 
 class HashMethodChoice {
   final String name;
@@ -18,9 +19,9 @@ class HashMethodChoice {
 
 class ChecksumResuld {
   final File file;
-  final Map<Hash, Digest> checksumMap;
+  final Map<String, Digest> checksumMap;
 
-  ChecksumResuld({required this.file}) : checksumMap = const {};
+  ChecksumResuld({required this.file}) : checksumMap = {};
 }
 
 class ChecksumProvider with ChangeNotifier {
@@ -37,7 +38,7 @@ class ChecksumProvider with ChangeNotifier {
 
   bool _isProcessing;
   String? _pathToFile;
-  final _resList = const <ChecksumResuld>[];
+  final _resList = <ChecksumResuld>[];
 
   ChecksumProvider() : _isProcessing = false;
 
@@ -63,5 +64,18 @@ class ChecksumProvider with ChangeNotifier {
   Future<void> calculate() async {
     _isProcessing = true;
     notifyListeners();
+
+    final res = ChecksumResuld(file: File(_pathToFile!));
+
+    for (final hashMethod in hashMethodChoices) {
+      if (hashMethod.isSelect) {
+        res.checksumMap[hashMethod.name] = await generateHashFile(
+          res.file,
+          hashMethod.method,
+        );
+      }
+    }
+
+    _pushRes(res);
   }
 }
